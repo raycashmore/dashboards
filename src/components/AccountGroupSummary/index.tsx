@@ -2,9 +2,11 @@ import Card from '../Card'
 import ui from '../shared/ui.module.css'
 import styles from './AccountGroupSummary.module.css'
 
+import CurrencySelect from '../CurrencySelect'
+
 export default function AccountGroupSummary(){
   return (
-    <Card title="Account group summary">
+    <Card title="Account group summary" headerRight={<CurrencySelect initial="AUD" /> }>
       <div className={styles.cards}>
         <div className={ui.card}>
           <div className={ui.small}>Current balance</div>
