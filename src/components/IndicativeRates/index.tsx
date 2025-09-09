@@ -6,15 +6,17 @@ import styles from './IndicativeRates.module.css'
 
 const RATES = {
   AUD: 1,
-  USD: 1.51,
-  NZD: 0.90,
-  GBP: 2.05,
-  EUR: 1.78,
-}
+  USD: 0.66,
+  NZD: 1.11,
+  GBP: 0.49,
+  EUR: 0.56,
+} as const
+
+type CurrencyCode = keyof typeof RATES;
 
 export default function IndicativeRates(){
   const listenerRef = useRef<Listener | undefined>(undefined)
-  const [currency, setCurrency] = useState<string>('USD')
+  const [currency, setCurrency] = useState<CurrencyCode>('USD')
   const channelRef = useRef<Channel | null>(null)
 
   useEffect(()=>{
@@ -25,7 +27,8 @@ export default function IndicativeRates(){
 
         listenerRef.current = await channelRef.current?.addContextListener('w1.dashboard-currency', (context: Context) => {
           console.log('Received w1.dashboard-currency', context)
-          setCurrency(context.currency)
+          // Ensure we cast to the defined CurrencyCode type
+          setCurrency(context.currency as CurrencyCode)
         })
       } else {
         console.log('FDC3 not available')
@@ -52,7 +55,7 @@ export default function IndicativeRates(){
           <div className={ui.balance}>10,000 🇦🇺</div>
         </div>
       </div>
-      <div className={ui.small} style={{marginTop:8}}>1 AUD = {RATES[currency]} {currency}</div>
+      <div className={ui.small} style={{marginTop:8}}>1 AUD = {(RATES as Record<CurrencyCode, number>)[currency]} {currency}</div>
     </Card>
   )
 }
