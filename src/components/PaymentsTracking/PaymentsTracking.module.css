@@ -1,0 +1,6 @@
+.payments{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.payBox{border-left:3px solid #16a34a}
+.payBoxRed{border-left:3px solid #dc2626}
+.payBoxBlue{border-left:3px solid #2563eb}
+.payBoxGray{border-left:3px solid #6b7280}
+@media (max-width:640px){.payments{grid-template-columns:1fr}}
